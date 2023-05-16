@@ -15,9 +15,11 @@ function MainRouter() {
           </div>
         }
       >
+        <ScrollToTop />
         <Routes>
-          <ScrollToTop />
-          <Route path="/" element={<Layout />}></Route>
+          <Route path="/" element={<Layout />}>
+            {/* <Route index path="/home" element={<Layout />} /> */}
+          </Route>
         </Routes>
       </Suspense>
     </Router>
