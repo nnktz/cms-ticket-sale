@@ -3,12 +3,19 @@ import SiderComponent from "./Sidebar";
 import { Layout, Typography } from "antd";
 import "./styles.css";
 import HeaderComponent from "./Header";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 const { Header, Sider, Content } = Layout;
 
 const DefaultLayout = () => {
-  React.useEffect(() => {}, []);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  React.useEffect(() => {
+    if (location.pathname === "/") {
+      navigate("home");
+    }
+  }, [location.pathname, navigate]);
 
   return (
     <Layout className="main-layout">

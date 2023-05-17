@@ -1,0 +1,64 @@
+.date-picker {
+  width: 155px;
+  height: 40px;
+  border-radius: 4px;
+}
+
+.ant-picker-suffix .anticon-calendar {
+  color: #ff993c;
+}
+
+.ant-picker-dropdown
+  .ant-picker-cell-in-view.ant-picker-cell-selected
+  .ant-picker-cell-inner,
+.ant-picker-dropdown
+  .ant-picker-week-panel-row-selected
+  td.ant-picker-cell:before {
+  background: #ffba7b;
+}
+
+.ant-picker-dropdown
+  .ant-picker-cell-in-view.ant-picker-cell-today
+  .ant-picker-cell-inner::before {
+  border: none;
+}
+
+.ant-picker-dropdown .ant-picker-cell .ant-picker-cell-inner {
+  border-radius: 50%;
+}
+
+.ant-picker-dropdown .ant-picker-content th,
+.ant-picker-dropdown .ant-picker-content td,
+.ant-picker .ant-picker-input > input {
+  font-family: "Montserrat";
+  font-style: normal;
+}
+
+.ant-picker-dropdown .ant-picker-content th {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
+  color: #c55e00;
+}
+
+.ant-picker-dropdown .ant-picker-content td {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.ant-picker-dropdown .ant-picker-footer-extra {
+  display: inline-flex;
+}
+
+.ant-picker-dropdown .ant-picker-cell-in-view {
+  color: #23221f;
+}
+
+.ant-picker .ant-picker-input > input {
+  color: #1e0d03;
+  opacity: 0.78;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+}
