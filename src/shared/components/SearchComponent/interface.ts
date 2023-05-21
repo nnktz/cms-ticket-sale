@@ -6,4 +6,5 @@ export interface ISearch {
   iconSuffix: React.ReactNode;
   style?: React.CSSProperties;
   onChange?: (value: any) => void;
+  clear?: boolean;
 }

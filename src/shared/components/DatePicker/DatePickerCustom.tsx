@@ -1,49 +1,17 @@
-import DatePicker, { DatePickerProps } from "antd/es/date-picker";
+import DatePicker from "antd/es/date-picker";
 import "./styles.css";
-import { useState } from "react";
-import Radio from "antd/es/radio";
 import dayjs from "dayjs";
 import "dayjs/locale/vi";
-import Typography from "antd/es/typography";
 import IDatePicker from "./interface";
 
 dayjs.locale("vi");
 
-const dateFormat = "MMMM, YYYY";
-const weekFormat = "DD/MM";
+const dateFormat = "DD/MM/YYYY";
 
-const customWeekStartEndFormat: DatePickerProps["format"] = (value) =>
-  `${dayjs(value).startOf("week").format(weekFormat)} - ${dayjs(value)
-    .endOf("week")
-    .format(weekFormat)}`;
-
-const DatePickerComponent: React.FC<IDatePicker> = ({
+const DatePickerCustom: React.FC<IDatePicker> = ({
   onchange,
   defaultValue,
 }) => {
-  const [mode, setMode] = useState<"date" | "week">("date");
-
-  const handleModeChange = (e: any) => {
-    setMode(e.target.value);
-  };
-
-  const renderExtraFooter = () => {
-    return (
-      <Radio.Group value={mode} onChange={handleModeChange}>
-        <Radio value="date">
-          <Typography.Text className="text-normal gray-brown medium-14">
-            Theo ngày
-          </Typography.Text>
-        </Radio>
-        <Radio value="week">
-          <Typography.Text className="text-normal gray-brown medium-14">
-            Theo tuần
-          </Typography.Text>
-        </Radio>
-      </Radio.Group>
-    );
-  };
-
   return (
     <DatePicker
       defaultValue={defaultValue}
@@ -51,9 +19,7 @@ const DatePickerComponent: React.FC<IDatePicker> = ({
       showToday={false}
       clearIcon={false}
       className="date-picker"
-      picker={mode}
-      format={mode === "date" ? dateFormat : customWeekStartEndFormat}
-      renderExtraFooter={renderExtraFooter}
+      format={dateFormat}
       locale={{
         lang: {
           locale: "vi",
@@ -93,4 +59,4 @@ const DatePickerComponent: React.FC<IDatePicker> = ({
   );
 };
 
-export default DatePickerComponent;
+export default DatePickerCustom;

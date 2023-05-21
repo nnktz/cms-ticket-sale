@@ -11,6 +11,7 @@ const SearchComponent = (props: ISearch) => {
       suffix={props.iconSuffix}
       style={props.style}
       className={props.classNames}
+      allowClear={props.clear}
     />
   );
 };

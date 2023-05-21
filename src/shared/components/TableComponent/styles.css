@@ -1,0 +1,39 @@
+.ant-table-wrapper .ant-table-thead > tr > th {
+  background: #f1f4f8;
+}
+
+.ant-pagination .ant-pagination-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ant-pagination .ant-pagination-item a {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #1e0d03;
+  opacity: 0.7;
+}
+
+.ant-pagination .ant-pagination-item-active {
+  border-color: #ff993c;
+}
+
+.ant-pagination .ant-pagination-item-active a {
+  color: #ff993c;
+}
+
+.ant-pagination .ant-pagination-item-active:hover {
+  border-color: #ffb800;
+}
+
+.ant-pagination .ant-pagination-item-active:hover a {
+  color: #ffb800;
+}
+
+.ant-table-wrapper .ant-table-pagination.ant-pagination {
+  margin-top: 50px;
+}

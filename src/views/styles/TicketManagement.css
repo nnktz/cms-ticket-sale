@@ -1,0 +1,74 @@
+.i-search {
+  font-size: 24px;
+  color: #1e0d03;
+}
+
+.i-filter {
+  font-size: 24px;
+  color: #ff993c;
+}
+
+.i-more {
+  font-size: 24px;
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+}
+
+.i-more:hover {
+  background-color: rgba(233, 228, 228, 0.84);
+  cursor: pointer;
+}
+
+.i-more:active {
+  background-color: gainsboro;
+}
+
+.search-ticket {
+  background: #f7f7f8;
+  width: 446px;
+  height: 48px;
+  border-radius: 8px;
+  border: none;
+}
+
+.modal-ticket .ant-modal-body {
+  width: 100%;
+}
+
+.modal-ticket .modal-container {
+  margin: 30px 0 34px 0;
+}
+
+.modal-ticket .modal-container-filter {
+  margin-top: 26px;
+}
+
+#date-picker-custom {
+  width: 143px;
+  border-radius: 8px;
+  border: 1px solid #a5a8b1;
+}
+
+/* antd */
+.search-ticket .ant-input {
+  background-color: #f7f7f8;
+  font-style: inherit;
+}
+
+.modal-ticket > .ant-modal-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 24px 32px;
+}
+
+.modal-ticket.modal-filter > .ant-modal-content {
+  width: 634px;
+}
+
+.modal-container-filter > .ant-space .ant-space-item:last-child {
+  display: flex;
+  justify-content: center;
+}

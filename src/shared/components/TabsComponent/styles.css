@@ -1,0 +1,12 @@
+.ant-tabs-tab.ant-tabs-tab-active .ant-typography {
+  color: #ff993c;
+  opacity: 1;
+}
+
+.ant-tabs .ant-tabs-ink-bar {
+  background: #ff993c;
+}
+
+.ant-tabs-top > .ant-tabs-nav .ant-tabs-ink-bar {
+  height: 3px;
+}

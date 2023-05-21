@@ -1,7 +1,6 @@
 import { useState } from "react";
 import LargeBox from "../../shared/components/BoxComponents/LargeBox";
 import { DatePickerProps, Space, Typography } from "antd";
-import "../styles/Home.css";
 import DatePickerComponent from "../../shared/components/DatePicker";
 import PieComponent from "../../shared/components/ChartComponents/PieComponent";
 import {
@@ -13,6 +12,7 @@ import {
   dataDays,
   dataWeeks,
 } from "../../shared/components/ChartComponents/AreaComponent/Data";
+import dayjs from "dayjs";
 
 const Home = () => {
   const [chartAreaData, setChartAreaData] = useState(dataDays);
@@ -33,12 +33,15 @@ const Home = () => {
   };
 
   return (
-    <LargeBox title="Thống kê">
+    <LargeBox title="Thống kê" style={{ paddingRight: 63 }}>
       <div className="flex-between">
         <Typography.Text className="text-normal semibold-18 gray-brown">
           Doanh thu
         </Typography.Text>
-        <DatePickerComponent onchange={onChangeChartArea} />
+        <DatePickerComponent
+          onchange={onChangeChartArea}
+          defaultValue={dayjs()}
+        />
       </div>
       <AreaComponent
         data={chartAreaData}
@@ -59,7 +62,7 @@ const Home = () => {
       </Typography.Text>
       <br />
       <Space style={{ marginTop: 83 }} size={145} align="start">
-        <DatePickerComponent onchange={onChangeChart} />
+        <DatePickerComponent onchange={onChangeChart} defaultValue={dayjs()} />
         <Space direction="vertical" align="center">
           <Typography.Text className="text-normal gray-brown semibold-18">
             Gói gia đình

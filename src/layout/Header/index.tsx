@@ -30,6 +30,7 @@ const HeaderComponent = () => {
         placeholder="Search"
         onChange={searchHandler}
         iconSuffix={<SearchOutlined style={iconHeader} />}
+        clear
       />
 
       <Space size={29}>
