@@ -4,6 +4,7 @@ import { Input } from "antd";
 const SearchComponent = (props: ISearch) => {
   return (
     <Input
+      autoComplete="off"
       value={props.value}
       name={props.name}
       onChange={props.onChange}

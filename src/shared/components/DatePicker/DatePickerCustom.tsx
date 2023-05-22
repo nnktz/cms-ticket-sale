@@ -11,6 +11,7 @@ const dateFormat = "DD/MM/YYYY";
 const DatePickerCustom: React.FC<IDatePicker> = ({
   onchange,
   defaultValue,
+  disabled,
 }) => {
   return (
     <DatePicker
@@ -18,6 +19,7 @@ const DatePickerCustom: React.FC<IDatePicker> = ({
       onChange={onchange}
       showToday={false}
       clearIcon={false}
+      disabled={disabled}
       className="date-picker"
       format={dateFormat}
       locale={{

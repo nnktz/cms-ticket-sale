@@ -1,0 +1,88 @@
+const dataTicket = [
+  {
+    ticketNumber: "205314876321",
+    usedDate: new Date("2021/04/14"),
+    ticketCategoryName: "Vé cổng",
+    gate: "Cổng 1",
+    checked: false,
+  },
+  {
+    ticketNumber: "205314801225",
+    usedDate: new Date("2021/04/14"),
+    ticketCategoryName: "Vé cổng",
+    gate: "Cổng 1",
+    checked: false,
+  },
+  {
+    ticketNumber: "205314897452",
+    usedDate: new Date("2021/04/14"),
+    ticketCategoryName: "Vé cổng",
+    gate: "Cổng 1",
+    checked: false,
+  },
+  {
+    ticketNumber: "205314821403",
+    usedDate: new Date("2021/04/14"),
+    ticketCategoryName: "Vé cổng",
+    gate: "Cổng 1",
+    checked: false,
+  },
+  {
+    ticketNumber: "205314860215",
+    usedDate: new Date("2021/04/14"),
+    ticketCategoryName: "Vé cổng",
+    gate: "Cổng 1",
+    checked: true,
+  },
+  {
+    ticketNumber: "205314848965",
+    usedDate: new Date("2021/04/14"),
+    ticketCategoryName: "Vé cổng",
+    gate: "Cổng 1",
+    checked: false,
+  },
+  {
+    ticketNumber: "205314830221",
+    usedDate: new Date("2021/04/14"),
+    ticketCategoryName: "Vé cổng",
+    gate: "Cổng 1",
+    checked: false,
+  },
+  {
+    ticketNumber: "205314814777",
+    usedDate: new Date("2021/04/14"),
+    ticketCategoryName: "Vé cổng",
+    gate: "Cổng 1",
+    checked: true,
+  },
+  {
+    ticketNumber: "205314801258",
+    usedDate: new Date("2021/04/14"),
+    ticketCategoryName: "Vé cổng",
+    gate: "Cổng 1",
+    checked: false,
+  },
+  {
+    ticketNumber: "205314887931",
+    usedDate: new Date("2021/04/14"),
+    ticketCategoryName: "Vé cổng",
+    gate: "Cổng 1",
+    checked: false,
+  },
+  {
+    ticketNumber: "205314897456",
+    usedDate: new Date("2021/04/14"),
+    ticketCategoryName: "Vé cổng",
+    gate: "Cổng 1",
+    checked: true,
+  },
+  {
+    ticketNumber: "205318776875",
+    usedDate: new Date("2021/04/14"),
+    ticketCategoryName: "Vé cổng",
+    gate: "Cổng 1",
+    checked: false,
+  },
+];
+
+export default dataTicket;

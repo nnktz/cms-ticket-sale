@@ -14,7 +14,7 @@ const HalfBox: React.FC<IHalfBox> = ({ mainTitle, subTitle, children }) => {
           >
             {mainTitle}
           </Typography.Title>
-          {children}
+          {children[0]}
         </div>
       </div>
       <div className="bg-white sub-box">
@@ -26,7 +26,7 @@ const HalfBox: React.FC<IHalfBox> = ({ mainTitle, subTitle, children }) => {
           >
             {subTitle}
           </Typography.Title>
-          {children}
+          {children[1]}
         </div>
       </div>
     </Space>

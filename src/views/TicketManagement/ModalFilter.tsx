@@ -24,11 +24,11 @@ interface IModalFilter {
 const ModalFilter: React.FC<IModalFilter> = (props) => {
   const [selectAll, setSelectAll] = useState(false);
 
-  const onChangeDateTo: DatePickerProps["onChange"] = (date, dateString) => {
+  const onChangeDateFrom: DatePickerProps["onChange"] = (date, dateString) => {
     console.log(date, dateString);
   };
 
-  const onChangeDateFrom: DatePickerProps["onChange"] = (date, dateString) => {
+  const onChangeDateTo: DatePickerProps["onChange"] = (date, dateString) => {
     console.log(date, dateString);
   };
 
@@ -52,7 +52,7 @@ const ModalFilter: React.FC<IModalFilter> = (props) => {
       <Form onFinish={props.onSave} className="modal-container-filter">
         <Space direction="vertical" size={0}>
           <Space size={122}>
-            <Form.Item label="" name="dateTo">
+            <Form.Item label="" name="dateFrom">
               <Col>
                 <Row>
                   <Typography.Text className="gray-brown semibold-16 text-normal opacity-7">
@@ -60,11 +60,11 @@ const ModalFilter: React.FC<IModalFilter> = (props) => {
                   </Typography.Text>
                 </Row>
                 <Row>
-                  <DatePickerCustom onchange={onChangeDateTo} />
+                  <DatePickerCustom onchange={onChangeDateFrom} />
                 </Row>
               </Col>
             </Form.Item>
-            <Form.Item label="" name="dateFrom">
+            <Form.Item label="" name="dateTo">
               <Col>
                 <Row>
                   <Typography.Text className="gray-brown semibold-16 text-normal opacity-7">
@@ -72,7 +72,7 @@ const ModalFilter: React.FC<IModalFilter> = (props) => {
                   </Typography.Text>
                 </Row>
                 <Row>
-                  <DatePickerCustom onchange={onChangeDateFrom} />
+                  <DatePickerCustom onchange={onChangeDateTo} />
                 </Row>
               </Col>
             </Form.Item>

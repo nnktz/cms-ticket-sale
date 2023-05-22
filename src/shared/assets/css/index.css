@@ -66,6 +66,10 @@ code {
   background: #f7f8fb;
 }
 
+.bg-yellow-1 {
+  background: #ff993c;
+}
+
 /* Text styles */
 .text-normal {
   font-family: "Montserrat";
@@ -131,6 +135,12 @@ code {
   line-height: 20px;
 }
 
+.italic-medium-14 {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+}
+
 .semibold-18 {
   font-weight: 600;
   font-size: 18px;
@@ -154,6 +164,10 @@ code {
 
 .opacity-7 {
   opacity: 0.7;
+}
+
+.opacity-8 {
+  opacity: 0.8;
 }
 
 /* flex */
@@ -185,10 +199,41 @@ code {
   color: #ffb800;
   opacity: 0.7;
   border-color: #ffb800;
+  background-color: inherit;
+}
+
+.ant-btn-primary:not(:disabled):hover {
+  background: #ffb800;
+  opacity: 0.7;
 }
 
 /* dropdown */
 .ant-dropdown .ant-dropdown-arrow:before,
 .ant-dropdown .ant-dropdown-menu {
   background: #ffd2a8;
+}
+
+/* icon */
+.i-search {
+  font-size: 24px;
+  color: #1e0d03;
+}
+
+.i-filter {
+  font-size: 24px;
+  color: #ff993c;
+}
+
+/* Search */
+.search-ticket {
+  background: #f7f7f8;
+  width: 446px;
+  height: 48px;
+  border-radius: 8px;
+  border: none;
+}
+
+.search-ticket .ant-input {
+  background-color: #f7f7f8;
+  font-style: inherit;
 }
