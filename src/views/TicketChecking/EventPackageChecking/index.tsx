@@ -1,26 +1,28 @@
 import React from "react";
-import HalfBox from "../../shared/components/BoxComponents/HalfBox";
 import { DatePickerProps, Form, Radio, Space, Typography } from "antd";
-import SearchComponent from "../../shared/components/SearchComponent";
-import SearchOutlined from "@ant-design/icons/lib/icons/SearchOutlined";
-import TableComponent from "../../shared/components/TableComponent";
-import ButtonComponent from "../../shared/components/ButtonComponent";
-import { dataTicket } from "./Data";
-import columns from "./ColumsData";
 import _debounce from "lodash/debounce";
 import { CSVLink } from "react-csv";
-import DatePickerCustom from "../../shared/components/DatePicker/DatePickerCustom";
 import dayjs from "dayjs";
+import ButtonComponent from "../../../shared/components/ButtonComponent";
+import HalfBox from "../../../shared/components/BoxComponents/HalfBox";
+import SearchComponent from "../../../shared/components/SearchComponent";
+import SearchOutlined from "@ant-design/icons/lib/icons/SearchOutlined";
+import TableComponent from "../../../shared/components/TableComponent";
+import DatePickerCustom from "../../../shared/components/DatePicker/DatePickerCustom";
+import { dataEventPackage } from "../Data";
+import columns from "./ColumsData";
+import SelectComponent from "../../../shared/components/SelectComponent";
 
 export interface IData {
   ticketNumber: string;
+  eventName: string;
   usedDate: any;
   ticketCategoryName: string;
   gate: string;
   checked: boolean;
 }
 
-const TicketChecking = () => {
+const EventPackageChecking = () => {
   const [form] = Form.useForm();
   const [checking, setChecking] = React.useState(false);
   const [valueSearch, setValueSearch] = React.useState("");
@@ -35,6 +37,10 @@ const TicketChecking = () => {
     target: { value },
   }: React.ChangeEvent<HTMLInputElement>) => {
     setValueSearch(value);
+  };
+
+  const handleChangeSelect = (value: string) => {
+    console.log(`selected ${value}`);
   };
 
   const onChangeDateTo: DatePickerProps["onChange"] = (date, dateString) => {
@@ -70,10 +76,11 @@ const TicketChecking = () => {
 
   React.useEffect(() => {
     let count = 1;
-    if (dataTicket && !(valueSearch.length > 0)) {
-      const newData: IData[] = dataTicket.map((data) => ({
+    if (dataEventPackage && !(valueSearch.length > 0)) {
+      const newData: IData[] = dataEventPackage.map((data) => ({
         key: count++,
         ticketNumber: data.ticketNumber,
+        eventName: data.eventName,
         usedDate: data.usedDate,
         ticketCategoryName: data.ticketCategoryName,
         gate: data.gate,
@@ -89,6 +96,7 @@ const TicketChecking = () => {
 
     const csvData = dataToExport.map((data) => [
       data.ticketNumber,
+      data.eventName,
       data.usedDate,
       data.ticketCategoryName,
       data.gate,
@@ -98,12 +106,13 @@ const TicketChecking = () => {
     if (csvData.length > 0) {
       const csvHeaders = [
         { key: "ticketNumber", label: "Số vé" },
+        { key: "eventName", label: "Tên sự kiện" },
         { key: "usedDate", label: "Ngày sử dụng" },
-        { key: "ticketCategoryName", label: "Tên loại vé" },
+        { key: "ticketCategoryName", label: "Loại vé" },
         { key: "gate", label: "Cổng check - in" },
         { key: "check", label: "" },
       ];
-      const csvFileName = "data_ticket_checking.csv";
+      const csvFileName = "data_event_package_checking.csv";
       const csvOptions = {
         headers: csvHeaders,
         filename: csvFileName,
@@ -152,6 +161,19 @@ const TicketChecking = () => {
         />
       </Space>
       <Form form={form} onFinish={() => {}}>
+        <Form.Item label="" name="name">
+          <SelectComponent
+            clear
+            placeholder="Chọn tên sự kiện"
+            options={[
+              {
+                value: "hoicho2021",
+                label: "Hội chợ triển lãm tiêu dùng 2021",
+              },
+            ]}
+            onchange={handleChangeSelect}
+          />
+        </Form.Item>
         <Form.Item label="" name="status">
           <Space align="start" size={26}>
             <Typography.Text className="semibold-16 text-normal gray-brown opacity-8">
@@ -221,4 +243,4 @@ const TicketChecking = () => {
   );
 };
 
-export default TicketChecking;
+export default EventPackageChecking;

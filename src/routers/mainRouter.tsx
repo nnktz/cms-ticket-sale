@@ -8,6 +8,9 @@ const PageError = lazy(() => import("../views/PageError"));
 const Home = lazy(() => import("../views/Home"));
 const TicketManagement = lazy(() => import("../views/TicketManagement"));
 const TicketChecking = lazy(() => import("../views/TicketChecking"));
+const EventPackageChecking = lazy(
+  () => import("../views/TicketChecking/EventPackageChecking")
+);
 const ServicePack = lazy(() => import("../views/ServicePack"));
 
 function MainRouter() {
@@ -28,6 +31,10 @@ function MainRouter() {
               <Route path=":params" element />
             </Route>
             <Route path="/ticket-check" element={<TicketChecking />} />
+            <Route
+              path="/ticket-check/event-package"
+              element={<EventPackageChecking />}
+            />
             <Route path="/service-pack" element={<ServicePack />} />
           </Route>
           <Route path="*" element={<PageError />} />
