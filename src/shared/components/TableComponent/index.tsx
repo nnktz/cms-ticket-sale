@@ -3,10 +3,6 @@ import ITable from "./interface";
 import "./styles.css";
 import { useNavigate } from "react-router-dom";
 import { SorterResult, TableCurrentDataSource } from "antd/es/table/interface";
-import {
-  CaretLeftOutlined,
-  CaretRightOutlined,
-} from "@ant-design/icons/lib/icons";
 
 const TableComponent = (props: ITable) => {
   const navigate = useNavigate();

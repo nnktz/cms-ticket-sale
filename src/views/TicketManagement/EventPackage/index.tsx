@@ -46,22 +46,23 @@ const EventPackage = () => {
   };
 
   const handleSearching = React.useCallback(() => {
-    _debounce(() => {
-      const filteredData = dataSource.filter((data) => {
-        return data.ticketNumber
-          .toLowerCase()
-          .includes(valueSearch.toLowerCase());
-      });
-      setFilteredDataSource(filteredData);
-      if (valueSearch.length > 0 && !(filteredDataSource.length > 0)) {
-        setDataSource([]);
-      }
-    }, 800);
-  }, [dataSource, filteredDataSource.length, valueSearch]);
+    const filteredData = dataSource.filter((data) => {
+      return data.ticketNumber
+        .toLowerCase()
+        .includes(valueSearch.toLowerCase());
+    });
+    setFilteredDataSource(filteredData);
+  }, [dataSource, valueSearch]);
+
+  const debouncedHandleSearching = React.useMemo(
+    () => _debounce(handleSearching, 800),
+    [handleSearching]
+  );
 
   React.useEffect(() => {
-    handleSearching();
-  }, [handleSearching]);
+    debouncedHandleSearching();
+    return debouncedHandleSearching.cancel;
+  }, [debouncedHandleSearching]);
 
   React.useEffect(() => {
     let count = 1;
