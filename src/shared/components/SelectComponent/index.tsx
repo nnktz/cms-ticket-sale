@@ -13,11 +13,13 @@ interface ISelect {
   style?: React.CSSProperties;
   placeholder?: string;
   className?: string;
+  defaultValue?: string;
 }
 
 const SelectComponent: React.FC<ISelect> = (props) => {
   return (
     <Select
+      defaultValue={props.defaultValue}
       allowClear={props.clear}
       style={props.style}
       onChange={props.onchange}

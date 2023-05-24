@@ -6,7 +6,7 @@ import { Space } from "antd";
 import ButtonComponent from "../../../shared/components/ButtonComponent";
 import FilterOutlined from "@ant-design/icons/lib/icons/FilterOutlined";
 import TableComponent from "../../../shared/components/TableComponent";
-import columns from "./ColumsData";
+import columns from "./ColumnsData";
 import { dataEventPackage } from "../Data";
 import _debounce from "lodash/debounce";
 import ModalFilter from "../ModalFilter";

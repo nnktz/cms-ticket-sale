@@ -20,7 +20,7 @@ const DatePickerCustom: React.FC<IDatePicker> = ({
       showToday={false}
       clearIcon={false}
       disabled={disabled}
-      className="date-picker"
+      className="date-picker-custom"
       format={dateFormat}
       locale={{
         lang: {

@@ -6,7 +6,7 @@ import SearchOutlined from "@ant-design/icons/lib/icons/SearchOutlined";
 import TableComponent from "../../shared/components/TableComponent";
 import ButtonComponent from "../../shared/components/ButtonComponent";
 import { dataTicket } from "./Data";
-import columns from "./ColumsData";
+import columns from "./ColumnsData";
 import _debounce from "lodash/debounce";
 import { CSVLink } from "react-csv";
 import DatePickerCustom from "../../shared/components/DatePicker/DatePickerCustom";

@@ -18,6 +18,7 @@ const TableComponent = (props: ITable) => {
 
   return (
     <Table
+      className={props.className}
       columns={props.columns}
       dataSource={props.dataSource}
       pagination={{

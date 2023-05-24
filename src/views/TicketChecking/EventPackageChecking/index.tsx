@@ -10,7 +10,7 @@ import SearchOutlined from "@ant-design/icons/lib/icons/SearchOutlined";
 import TableComponent from "../../../shared/components/TableComponent";
 import DatePickerCustom from "../../../shared/components/DatePicker/DatePickerCustom";
 import { dataEventPackage } from "../Data";
-import columns from "./ColumsData";
+import columns from "./ColumnsData";
 import SelectComponent from "../../../shared/components/SelectComponent";
 
 export interface IData {

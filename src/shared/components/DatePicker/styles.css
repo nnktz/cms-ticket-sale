@@ -5,8 +5,20 @@
   border: 1px solid #e6e0e0;
 }
 
-.ant-picker-suffix .anticon-calendar {
+.date-picker-custom {
+  width: 143px;
+  height: 40px;
+  border-radius: 8px;
+  border: 1px solid #a5a8b1;
+}
+
+.date-picker .ant-picker-suffix .anticon-calendar {
   color: #ff993c;
+}
+
+.date-picker-custom .ant-picker-suffix .anticon-calendar {
+  color: #ff993c;
+  font-size: 20px;
 }
 
 .ant-picker-dropdown
@@ -56,10 +68,18 @@
   color: #23221f;
 }
 
-.ant-picker .ant-picker-input > input {
+.date-picker.ant-picker .ant-picker-input > input {
   color: #1e0d03;
   opacity: 0.78;
   font-weight: 500;
   font-size: 14px;
   line-height: 22px;
+}
+
+.date-picker-custom.ant-picker .ant-picker-input > input {
+  color: #1e0d03;
+  opacity: 0.7;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
 }

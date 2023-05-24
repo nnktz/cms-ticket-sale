@@ -141,6 +141,12 @@ code {
   line-height: 22px;
 }
 
+.italic-12 {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+}
+
 .semibold-18 {
   font-weight: 600;
   font-size: 18px;
@@ -154,6 +160,10 @@ code {
 }
 
 /* opacity */
+.opacity-4 {
+  opacity: 0.4;
+}
+
 .opacity-5 {
   opacity: 0.5;
 }
@@ -168,6 +178,10 @@ code {
 
 .opacity-8 {
   opacity: 0.8;
+}
+
+.opacity {
+  opacity: 1;
 }
 
 /* flex */
