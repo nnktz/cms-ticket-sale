@@ -234,7 +234,7 @@ const EventPackageChecking = () => {
           <ButtonComponent
             className="button-no-background bold-18 text-normal yellow-1"
             text="Lọc"
-            type="submit"
+            htmlType="submit"
             style={{ width: 160 }}
           />
         </div>

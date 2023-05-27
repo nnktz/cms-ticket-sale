@@ -1,28 +1,35 @@
 import React from "react";
 import LargeBox from "../../shared/components/BoxComponents/LargeBox";
-import { Space } from "antd";
+import { Space, message } from "antd";
 import SearchComponent from "../../shared/components/SearchComponent";
 import SearchOutlined from "@ant-design/icons/lib/icons/SearchOutlined";
 import ButtonComponent from "../../shared/components/ButtonComponent";
 import { CSVLink } from "react-csv";
-import dataPackage from "./Data";
 import TableComponent from "../../shared/components/TableComponent";
 import columns from "./ColumnsData";
 import ModalAdd from "./ModalAdd";
 import _debounce from "lodash/debounce";
+import { fetchTicketPackages } from "../../modules/ticketPackages/actions";
+import { RootState, useAppDispatch } from "../../core/store/redux";
+import { useSelector } from "react-redux";
 
 export interface IData {
   packageCode: string;
   packageName: string;
   applicableDate: any;
   expiredDate: any;
-  price: string;
+  price: string | null;
   comboPrice: string | null;
   comboTicketNumber: number | null;
   status: string;
 }
 
-const ServicePack = () => {
+const ServicePack: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const { error, ticketPackages } = useSelector(
+    (state: RootState) => state.ticketPackage
+  );
+
   const [valueSearch, setValueSearch] = React.useState("");
   const [dataSource, setDataSource] = React.useState<IData[]>([]);
   const [filteredDataSource, setFilteredDataSource] = React.useState<IData[]>(
@@ -46,9 +53,19 @@ const ServicePack = () => {
     setValueSearch(value);
   };
 
+  React.useEffect(() => {
+    try {
+      dispatch(fetchTicketPackages());
+    } catch (err) {
+      message.error(error);
+    }
+  }, [dispatch, error]);
+
   const handleSearching = React.useCallback(() => {
     const filteredData = dataSource.filter((data) => {
-      return data.packageCode.toLowerCase().includes(valueSearch.toLowerCase());
+      return data.packageCode
+        ?.toLowerCase()
+        .includes(valueSearch.toLowerCase());
     });
     setFilteredDataSource(filteredData);
   }, [dataSource, valueSearch]);
@@ -65,8 +82,8 @@ const ServicePack = () => {
 
   React.useEffect(() => {
     let count = 1;
-    if (dataPackage && !(valueSearch.length > 0)) {
-      const newData: IData[] = dataPackage.map((data) => ({
+    if (ticketPackages && !(valueSearch.length > 0)) {
+      const newData: IData[] = ticketPackages.map((data) => ({
         key: count++,
         packageCode: data.packageCode,
         packageName: data.packageName,
@@ -79,7 +96,7 @@ const ServicePack = () => {
       }));
       setDataSource(newData);
     }
-  }, [valueSearch.length]);
+  }, [ticketPackages, valueSearch.length]);
 
   const handleExportCSV = () => {
     let dataToExport =
@@ -156,7 +173,7 @@ const ServicePack = () => {
           dataSource={tableDataSource}
           pageSize={8}
         />
-        <ModalAdd open={visible} onCancel={handleCancel} onOK={handleCancel} />
+        <ModalAdd open={visible} onCancel={handleCancel} />
       </Space>
     </LargeBox>
   );

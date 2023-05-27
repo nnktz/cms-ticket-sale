@@ -1,7 +1,6 @@
 export const dataTicket = [
   {
     ticketNumber: "205314876321",
-    eventName: "Hội chợ triển lãm tiêu dùng 2021",
     usedDate: new Date("2021/04/14"),
     ticketCategoryName: "Vé cổng",
     gate: "Cổng 1",
@@ -9,7 +8,6 @@ export const dataTicket = [
   },
   {
     ticketNumber: "205314801225",
-    eventName: "Hội chợ triển lãm tiêu dùng 2021",
     usedDate: new Date("2021/04/14"),
     ticketCategoryName: "Vé cổng",
     gate: "Cổng 1",
@@ -17,7 +15,6 @@ export const dataTicket = [
   },
   {
     ticketNumber: "205314897452",
-    eventName: "Hội chợ triển lãm tiêu dùng 2021",
     usedDate: new Date("2021/04/14"),
     ticketCategoryName: "Vé cổng",
     gate: "Cổng 1",
@@ -25,7 +22,6 @@ export const dataTicket = [
   },
   {
     ticketNumber: "205314821403",
-    eventName: "Hội chợ triển lãm tiêu dùng 2021",
     usedDate: new Date("2021/04/14"),
     ticketCategoryName: "Vé cổng",
     gate: "Cổng 1",
@@ -33,7 +29,6 @@ export const dataTicket = [
   },
   {
     ticketNumber: "205314860215",
-    eventName: "Hội chợ triển lãm tiêu dùng 2021",
     usedDate: new Date("2021/04/14"),
     ticketCategoryName: "Vé cổng",
     gate: "Cổng 1",
@@ -41,7 +36,6 @@ export const dataTicket = [
   },
   {
     ticketNumber: "205314848965",
-    eventName: "Hội chợ triển lãm tiêu dùng 2021",
     usedDate: new Date("2021/04/14"),
     ticketCategoryName: "Vé cổng",
     gate: "Cổng 1",
@@ -49,7 +43,6 @@ export const dataTicket = [
   },
   {
     ticketNumber: "205314830221",
-    eventName: "Hội chợ triển lãm tiêu dùng 2021",
     usedDate: new Date("2021/04/14"),
     ticketCategoryName: "Vé cổng",
     gate: "Cổng 1",
@@ -57,7 +50,6 @@ export const dataTicket = [
   },
   {
     ticketNumber: "205314814777",
-    eventName: "Hội chợ triển lãm tiêu dùng 2021",
     usedDate: new Date("2021/04/14"),
     ticketCategoryName: "Vé cổng",
     gate: "Cổng 1",
@@ -65,7 +57,6 @@ export const dataTicket = [
   },
   {
     ticketNumber: "205314801258",
-    eventName: "Hội chợ triển lãm tiêu dùng 2021",
     usedDate: new Date("2021/04/14"),
     ticketCategoryName: "Vé cổng",
     gate: "Cổng 1",
@@ -73,7 +64,6 @@ export const dataTicket = [
   },
   {
     ticketNumber: "205314887931",
-    eventName: "Hội chợ triển lãm tiêu dùng 2021",
     usedDate: new Date("2021/04/14"),
     ticketCategoryName: "Vé cổng",
     gate: "Cổng 1",
@@ -81,7 +71,6 @@ export const dataTicket = [
   },
   {
     ticketNumber: "205314897456",
-    eventName: "Hội chợ triển lãm tiêu dùng 2021",
     usedDate: new Date("2021/04/14"),
     ticketCategoryName: "Vé cổng",
     gate: "Cổng 1",
@@ -89,7 +78,6 @@ export const dataTicket = [
   },
   {
     ticketNumber: "205318776875",
-    eventName: "Hội chợ triển lãm tiêu dùng 2021",
     usedDate: new Date("2021/04/14"),
     ticketCategoryName: "Vé cổng",
     gate: "Cổng 1",

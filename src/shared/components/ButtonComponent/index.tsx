@@ -7,14 +7,16 @@ interface ButtonProps {
   onClick?: () => void;
   className?: string;
   style?: CSSProperties;
-  type?: "button" | "submit" | "reset";
+  htmlType?: "button" | "submit" | "reset";
+  loading?: boolean;
 }
 
 const ButtonComponent = (props: ButtonProps) => {
   return (
     <Button
+      loading={props.loading}
       type="primary"
-      htmlType={props.type}
+      htmlType={props.htmlType}
       icon={props.icon}
       size="large"
       onClick={props.onClick}

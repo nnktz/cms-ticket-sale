@@ -88,13 +88,13 @@ const columns: ColumnsType<IData> = [
         Giá vé (VNĐ/Vé)
       </Typography.Text>
     ),
-    dataIndex: "comboPrice",
-    key: "comboPrice",
-    render: (comboPrice: string) => (
+    dataIndex: "price",
+    key: "price",
+    render: (price: string) => (
       <>
-        {comboPrice && (
+        {price && (
           <Typography.Text className="medium-14 text-normal gray-brown opacity-7">
-            {Number(comboPrice).toLocaleString("vi-VN")} VNĐ
+            {Number(price).toLocaleString("vi-VN")} VNĐ
           </Typography.Text>
         )}
       </>

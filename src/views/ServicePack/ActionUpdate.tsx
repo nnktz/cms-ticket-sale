@@ -25,7 +25,6 @@ const ActionUpdate = (props: any) => {
       <ModalUpdate
         record={props.record}
         open={isModalVisible}
-        onOK={closeModal}
         onCancel={closeModal}
       />
     </>

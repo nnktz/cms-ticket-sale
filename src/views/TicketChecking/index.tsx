@@ -1,16 +1,30 @@
 import React from "react";
 import HalfBox from "../../shared/components/BoxComponents/HalfBox";
-import { DatePickerProps, Form, Radio, Space, Typography } from "antd";
+import {
+  DatePickerProps,
+  Form,
+  Popconfirm,
+  Radio,
+  RadioChangeEvent,
+  Space,
+  Typography,
+  message,
+} from "antd";
 import SearchComponent from "../../shared/components/SearchComponent";
 import SearchOutlined from "@ant-design/icons/lib/icons/SearchOutlined";
 import TableComponent from "../../shared/components/TableComponent";
 import ButtonComponent from "../../shared/components/ButtonComponent";
-import { dataTicket } from "./Data";
 import columns from "./ColumnsData";
 import _debounce from "lodash/debounce";
 import { CSVLink } from "react-csv";
 import DatePickerCustom from "../../shared/components/DatePicker/DatePickerCustom";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
+import { RootState, useAppDispatch } from "../../core/store/redux";
+import { useSelector } from "react-redux";
+import {
+  fetchTickets,
+  updateChecked,
+} from "../../modules/ticketChecking/actions";
 
 export interface IData {
   ticketNumber: string;
@@ -20,7 +34,12 @@ export interface IData {
   checked: boolean;
 }
 
-const TicketChecking = () => {
+const TicketChecking: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const { error, tickets } = useSelector(
+    (state: RootState) => state.ticketChecking
+  );
+
   const [form] = Form.useForm();
   const [checking, setChecking] = React.useState(false);
   const [valueSearch, setValueSearch] = React.useState("");
@@ -28,8 +47,11 @@ const TicketChecking = () => {
   const [filteredDataSource, setFilteredDataSource] = React.useState<IData[]>(
     []
   );
+  const [radioValue, setRadioValue] = React.useState<number>(1);
+  const [dateFrom, setDateFrom] = React.useState<Dayjs>(dayjs());
+  const [dateTo, setDateTo] = React.useState<Dayjs | null>(null);
 
-  const tableDataSource = valueSearch ? filteredDataSource : dataSource;
+  const tableDataSource = filteredDataSource ? filteredDataSource : dataSource;
 
   const onchangeSearch = ({
     target: { value },
@@ -37,17 +59,41 @@ const TicketChecking = () => {
     setValueSearch(value);
   };
 
-  const onChangeDateTo: DatePickerProps["onChange"] = (date, dateString) => {
-    console.log(date, dateString);
+  const handleRadioChange = (e: RadioChangeEvent) => {
+    setRadioValue(e.target.value);
   };
 
   const onChangeDateFrom: DatePickerProps["onChange"] = (date, dateString) => {
-    console.log(date, dateString);
+    const dateFrom = dayjs(date);
+    setDateFrom(dateFrom);
+  };
+
+  const onChangeDateTo: DatePickerProps["onChange"] = (date, dateString) => {
+    const dateTo = dayjs(date);
+    setDateTo(dateTo);
   };
 
   const checkingHandler = () => {
+    dispatch(updateChecked());
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(null);
+      }, 2000);
+    });
+  };
+
+  const confirm = async (): Promise<void> => {
+    await checkingHandler();
     setChecking(true);
   };
+
+  React.useEffect(() => {
+    try {
+      dispatch(fetchTickets());
+    } catch (err) {
+      message.error(error);
+    }
+  }, [dispatch, error]);
 
   const handleSearching = React.useCallback(() => {
     const filteredData = dataSource.filter((data) => {
@@ -70,8 +116,8 @@ const TicketChecking = () => {
 
   React.useEffect(() => {
     let count = 1;
-    if (dataTicket && !(valueSearch.length > 0)) {
-      const newData: IData[] = dataTicket.map((data) => ({
+    if (tickets && !(valueSearch.length > 0)) {
+      const newData: IData[] = tickets.map((data) => ({
         key: count++,
         ticketNumber: data.ticketNumber,
         usedDate: data.usedDate,
@@ -81,7 +127,7 @@ const TicketChecking = () => {
       }));
       setDataSource(newData);
     }
-  }, [valueSearch.length]);
+  }, [tickets, valueSearch.length]);
 
   const handleExportCSV = () => {
     let dataToExport =
@@ -122,6 +168,32 @@ const TicketChecking = () => {
     }
   };
 
+  const handleFormFinish = () => {
+    let filteredData: IData[] = [];
+    switch (radioValue) {
+      case 2:
+        filteredData = dataSource.filter((d) => d.checked);
+        break;
+      case 3:
+        filteredData = dataSource.filter((d) => !d.checked);
+        break;
+      default:
+        filteredData = dataSource;
+        break;
+    }
+
+    if (dateTo) {
+      filteredData = filteredData.filter(
+        (data) =>
+          dayjs(data.usedDate).isSame(dateFrom) ||
+          (dayjs(data.usedDate).isAfter(dateFrom) &&
+            dayjs(data.usedDate).isSame(dateTo)) ||
+          dayjs(data.usedDate).isBefore(dateTo)
+      );
+    }
+    setFilteredDataSource(filteredData);
+  };
+
   return (
     <HalfBox mainTitle="Đối soát vé" subTitle="Lọc vé">
       <Space style={{ width: "100%" }} direction="vertical" size={24}>
@@ -138,11 +210,26 @@ const TicketChecking = () => {
           {checking ? (
             handleExportCSV()
           ) : (
-            <ButtonComponent
-              text="Chốt đối soát"
-              className="bold-18 text-normal white bg-yellow-1"
-              onClick={checkingHandler}
-            />
+            <Popconfirm
+              title="Đối soát vé"
+              description="Có muốn chốt đối soát dữ liệu hiện tại?"
+              onConfirm={confirm}
+              okText={
+                <Typography.Text className="text-normal white medium-14">
+                  Xác nhận
+                </Typography.Text>
+              }
+              cancelText={
+                <Typography.Text className="text-normal gray-brown opacity-8 medium-14">
+                  Huỷ
+                </Typography.Text>
+              }
+            >
+              <ButtonComponent
+                text="Chốt đối soát"
+                className="bold-18 text-normal white bg-yellow-1"
+              />
+            </Popconfirm>
           )}
         </div>
         <TableComponent
@@ -151,13 +238,17 @@ const TicketChecking = () => {
           pageSize={8}
         />
       </Space>
-      <Form form={form} onFinish={() => {}}>
+      <Form form={form} onFinish={handleFormFinish}>
         <Form.Item label="" name="status">
           <Space align="start" size={26}>
             <Typography.Text className="semibold-16 text-normal gray-brown opacity-8">
               Tình trạng đối soát
             </Typography.Text>
-            <Radio.Group name="radiogroup" defaultValue={1}>
+            <Radio.Group
+              name="radiogroup"
+              defaultValue={1}
+              onChange={handleRadioChange}
+            >
               <Space size={16} direction="vertical">
                 <Radio value={1} className="radio">
                   <Typography.Text className="gray-brown medium-16 text-normal opacity-7">
@@ -195,7 +286,7 @@ const TicketChecking = () => {
             </Typography.Text>
             <DatePickerCustom
               disabled
-              defaultValue={dayjs()}
+              defaultValue={dateFrom}
               onchange={onChangeDateFrom}
             />
           </Space>
@@ -212,7 +303,7 @@ const TicketChecking = () => {
           <ButtonComponent
             className="button-no-background bold-18 text-normal yellow-1"
             text="Lọc"
-            type="submit"
+            htmlType="submit"
             style={{ width: 160 }}
           />
         </div>

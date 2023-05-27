@@ -8,6 +8,7 @@ import {
   Space,
   TimePicker,
   Typography,
+  message,
 } from "antd";
 import ModalComponent from "../../shared/components/Modal";
 import "../styles/ServicePack.css";
@@ -17,6 +18,9 @@ import type { CheckboxChangeEvent } from "antd/es/checkbox";
 import SelectComponent from "../../shared/components/SelectComponent";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
+import { RootState, useAppDispatch } from "../../core/store/redux";
+import { useSelector } from "react-redux";
+import { addTicketPackage } from "../../modules/ticketPackages/actions";
 dayjs.extend(customParseFormat);
 
 const buttonStyle: React.CSSProperties = {
@@ -37,10 +41,25 @@ const cancelButtonStyle: React.CSSProperties = {
 interface IModalAdd {
   open: boolean;
   onCancel: () => void;
-  onOK: () => void;
 }
 
-const ModalAdd: React.FC<IModalAdd> = ({ open, onCancel, onOK }) => {
+const ModalAdd: React.FC<IModalAdd> = ({ open, onCancel }) => {
+  const dispatch = useAppDispatch();
+  const { loading, error } = useSelector(
+    (state: RootState) => state.ticketPackage
+  );
+
+  const [name, setName] = React.useState("");
+  const [price, setPrice] = React.useState("");
+  const [comboPrice, setComboPrice] = React.useState("");
+  const [comboNumber, setComboNumber] = React.useState("");
+  const [selected, setSelected] = React.useState("");
+  const [priceChecked, setPriceChecked] = React.useState(false);
+  const [comboChecked, setComboChecked] = React.useState(false);
+  const [applicableDate, setApplicableDate] = React.useState<Dayjs | null>(
+    null
+  );
+  const [expiredDate, setExpiredDate] = React.useState<Dayjs | null>(null);
   const [applicableTime, setApplicableTime] = React.useState<Dayjs | null>(
     null
   );
@@ -50,14 +69,20 @@ const ModalAdd: React.FC<IModalAdd> = ({ open, onCancel, onOK }) => {
     date,
     dateString
   ) => {
-    console.log(date, dateString);
+    if (date) {
+      const applicableDate = dayjs(date);
+      setApplicableDate(applicableDate);
+    }
   };
 
   const onChangeExpiredDate: DatePickerProps["onChange"] = (
     date,
     dateString
   ) => {
-    console.log(date, dateString);
+    if (date) {
+      const expiredDate = dayjs(date).startOf("day");
+      setExpiredDate(expiredDate);
+    }
   };
 
   const onChangeApplicableTime = (time: Dayjs | null) => {
@@ -68,12 +93,67 @@ const ModalAdd: React.FC<IModalAdd> = ({ open, onCancel, onOK }) => {
     setExpiredTime(time);
   };
 
-  const onChangePrice = (e: CheckboxChangeEvent) => {
-    console.log(`checked = ${e.target.checked}`);
+  const onChangePriceCheckbox = (e: CheckboxChangeEvent) => {
+    setPriceChecked(e.target.checked);
+  };
+
+  const onChangeComboCheckbox = (e: CheckboxChangeEvent) => {
+    setComboChecked(e.target.checked);
   };
 
   const handleChangeSelect = (value: string) => {
-    console.log(`selected ${value}`);
+    setSelected(value);
+  };
+
+  const onchangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setName(event.target.value);
+  };
+
+  const onchangePrice = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPrice(event.target.value);
+  };
+
+  const onchangeComboPrice = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setComboPrice(event.target.value);
+  };
+
+  const onchangeComboNumber = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setComboNumber(event.target.value);
+  };
+
+  const handleAddTicketPackage = () => {
+    if (name) {
+      if (expiredDate && expiredTime && applicableDate && applicableTime) {
+        const combinedExpiredDateTime = expiredDate
+          .set("hour", expiredTime.hour())
+          .set("minute", expiredTime.minute())
+          .set("second", expiredTime.second());
+        const combinedApplicableDateTime = applicableDate
+          .set("hour", applicableTime.hour())
+          .set("minute", applicableTime.minute())
+          .set("second", applicableTime.second());
+        try {
+          dispatch(
+            addTicketPackage({
+              packageName: name,
+              applicableDate: combinedApplicableDateTime.toString(),
+              expiredDate: combinedExpiredDateTime.toString(),
+              price: priceChecked ? price : null,
+              comboPrice: comboChecked ? comboPrice : null,
+              comboTicketNumber: comboChecked ? Number(comboNumber) : null,
+              status: selected,
+            })
+          );
+          setTimeout(() => window.location.reload(), 1000);
+        } catch (err) {
+          message.error(error);
+        }
+      } else {
+        message.warning("Chưa chọn ngày hoặc thời gian!");
+      }
+    } else {
+      message.warning("Chưa nhập tên gói vé!");
+    }
   };
 
   return (
@@ -82,7 +162,7 @@ const ModalAdd: React.FC<IModalAdd> = ({ open, onCancel, onOK }) => {
       width={758}
       open={open}
       onCancel={onCancel}
-      onOK={onOK}
+      onOK={handleAddTicketPackage}
       closable={false}
       className="modal-service"
       title={
@@ -91,8 +171,11 @@ const ModalAdd: React.FC<IModalAdd> = ({ open, onCancel, onOK }) => {
         </Typography.Text>
       }
       okText={
-        <Typography.Text className="white bold-18 text-normal">
-          Lưu
+        <Typography.Text
+          className="white bold-18 text-normal"
+          disabled={loading}
+        >
+          {loading ? "Đang lưu..." : "Lưu"}
         </Typography.Text>
       }
       cancelText={
@@ -115,10 +198,13 @@ const ModalAdd: React.FC<IModalAdd> = ({ open, onCancel, onOK }) => {
               </Typography.Text>
               <div>
                 <Input
+                  name="name"
+                  autoComplete="off"
                   className="text-normal medium-16 gray-brown opacity-7 input-modal"
                   style={{ width: 367 }}
                   placeholder="Nhập tên gói vé"
                   required
+                  onChange={onchangeName}
                 />
               </div>
             </Col>
@@ -169,41 +255,44 @@ const ModalAdd: React.FC<IModalAdd> = ({ open, onCancel, onOK }) => {
             Giá vé áp dụng
           </Typography.Text>
           <Space>
-            <Checkbox className="checkbox" onChange={onChangePrice}>
+            <Checkbox className="checkbox" onChange={onChangePriceCheckbox}>
               <Typography.Text className="text-normal medium-16 gray-brown opacity-7">
                 Vé lẻ (vnđ/vé) với giá
               </Typography.Text>
             </Checkbox>
             <Input
+              name="price"
               className="text-normal medium-16 gray-brown opacity-7 input-modal input-price"
               style={{ width: 148 }}
               placeholder="Giá vé"
-              required
+              onChange={onchangePrice}
             />
             <Typography.Text className="text-normal medium-16 gray-brown opacity-7">
               / vé
             </Typography.Text>
           </Space>
           <Space>
-            <Checkbox className="checkbox">
+            <Checkbox className="checkbox" onChange={onChangeComboCheckbox}>
               <Typography.Text className="text-normal medium-16 gray-brown opacity-7">
                 Combo vé với giá
               </Typography.Text>
             </Checkbox>
             <Input
+              name="comboPrice"
               className="text-normal medium-16 gray-brown opacity-7 input-modal input-price"
               style={{ width: 148 }}
               placeholder="Giá vé"
-              required
+              onChange={onchangeComboPrice}
             />
             <Typography.Text className="text-normal medium-16 gray-brown opacity-7">
               /
             </Typography.Text>
             <Input
+              name="comboNumber"
               className="text-normal medium-16 gray-brown opacity-7 input-modal input-price"
               style={{ width: 72 }}
-              placeholder="Giá vé"
-              required
+              placeholder="Số vé"
+              onChange={onchangeComboNumber}
             />
             <Typography.Text className="text-normal medium-16 gray-brown opacity-7">
               vé

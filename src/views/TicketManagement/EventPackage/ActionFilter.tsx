@@ -4,8 +4,14 @@ import MoreOutlined from "@ant-design/icons/lib/icons/MoreOutlined";
 import { useState } from "react";
 import ModalTicket from "./ModalTicket";
 import DropDownComponent from "../../../shared/components/DropDownComponent";
+import { RootState, useAppDispatch } from "../../../core/store/redux";
+import { useSelector } from "react-redux";
+import { IData } from ".";
+import { updateEventTicket } from "../../../modules/ticketManagement/actions";
 
-const ActionFilter = (props: any) => {
+const ActionFilter = ({ record }: { record: IData }) => {
+  const dispatch = useAppDispatch();
+  const { error } = useSelector((state: RootState) => state.ticketManagement);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const showModal = () => {
@@ -17,8 +23,19 @@ const ActionFilter = (props: any) => {
   };
 
   const handleMenuClick: MenuProps["onClick"] = (e) => {
-    message.info("Click on menu item.");
     console.log("click", e);
+  };
+
+  const handleUseTicket = (id: string) => {
+    try {
+      dispatch(updateEventTicket(id, { usageStatus: "finished" }));
+    } catch (err) {
+      message.error(error);
+    }
+  };
+
+  const handleUpdate = () => {
+    handleUseTicket(record.bookingCode);
   };
 
   const items: MenuProps["items"] = [
@@ -29,17 +46,16 @@ const ActionFilter = (props: any) => {
           Sử dụng vé
         </Typography.Text>
       ),
+      onClick: handleUpdate,
     },
     {
       key: "2",
       label: (
-        <Typography.Text
-          className="medium-14 text-normal gray-brown"
-          onClick={showModal}
-        >
+        <Typography.Text className="medium-14 text-normal gray-brown">
           Đổi ngày sử dụng
         </Typography.Text>
       ),
+      onClick: showModal,
     },
   ];
 
@@ -58,9 +74,8 @@ const ActionFilter = (props: any) => {
         <MoreOutlined className="i-more flex-center" />
       </DropDownComponent>
       <ModalTicket
-        record={props.record}
+        record={record}
         open={isModalVisible}
-        onOK={closeModal}
         onCancel={closeModal}
       />
     </>

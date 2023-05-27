@@ -1,9 +1,13 @@
 import React from "react";
 import ModalComponent from "../../../shared/components/Modal";
-import { DatePickerProps, Space, Typography } from "antd";
+import { DatePickerProps, Space, Typography, message } from "antd";
 import "../../styles/TicketManagement.css";
 import { IData } from ".";
 import DatePickerCustom from "../../../shared/components/DatePicker/DatePickerCustom";
+import { RootState, useAppDispatch } from "../../../core/store/redux";
+import { useSelector } from "react-redux";
+import dayjs, { Dayjs } from "dayjs";
+import { updateEventTicket } from "../../../modules/ticketManagement/actions";
 
 const buttonStyle: React.CSSProperties = {
   width: 160,
@@ -23,16 +27,42 @@ const cancelButtonStyle: React.CSSProperties = {
 interface IModalTicket {
   open: boolean;
   onCancel: () => void;
-  onOK: () => void;
 }
 
 const ModalTicket: React.FC<
   {
     record: IData;
   } & IModalTicket
-> = ({ record, open, onCancel, onOK }) => {
+> = ({ record, open, onCancel }) => {
+  const dispatch = useAppDispatch();
+  const { loading, error } = useSelector(
+    (state: RootState) => state.ticketManagement
+  );
+  const [usedDate, setUsedDate] = React.useState<Dayjs | null>(null);
   const onChangeDate: DatePickerProps["onChange"] = (date, dateString) => {
-    console.log(date, dateString);
+    if (date) {
+      const usedDate = dayjs(date);
+      setUsedDate(usedDate);
+    }
+  };
+
+  const handleChangeDate = (id: string) => {
+    const date = usedDate?.toString();
+    if (!date || date === record.usedDate) {
+      message.warning("Chưa có sự thay đổi ngày");
+      return;
+    }
+
+    try {
+      dispatch(updateEventTicket(id, { usedDate: date }));
+      setTimeout(() => window.location.reload(), 2000);
+    } catch (err) {
+      message.error(error);
+    }
+  };
+
+  const handleOk = () => {
+    handleChangeDate(record.bookingCode);
   };
 
   return (
@@ -41,7 +71,7 @@ const ModalTicket: React.FC<
       width={758}
       open={open}
       onCancel={onCancel}
-      onOK={onOK}
+      onOK={handleOk}
       closable={false}
       className="modal-ticket"
       title={
@@ -50,8 +80,11 @@ const ModalTicket: React.FC<
         </Typography.Text>
       }
       okText={
-        <Typography.Text className="white bold-18 text-normal">
-          Lưu
+        <Typography.Text
+          className="white bold-18 text-normal"
+          disabled={loading}
+        >
+          {loading ? "Đang lưu..." : "Lưu"}
         </Typography.Text>
       }
       cancelText={
@@ -91,7 +124,12 @@ const ModalTicket: React.FC<
           <Typography.Text className="semibold-16 text-normal gray-brown opacity-7">
             Hạn sử dụng
           </Typography.Text>
-          <DatePickerCustom onchange={onChangeDate} />
+          <DatePickerCustom
+            onchange={onChangeDate}
+            defaultValue={
+              record.usedDate !== "" ? dayjs(record.usedDate) : null
+            }
+          />
         </Space>
       </Space>
     </ModalComponent>
