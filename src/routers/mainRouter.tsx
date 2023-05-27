@@ -27,9 +27,7 @@ function MainRouter() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index path="/home" element={<Home />} />
-            <Route path="/ticket-management" element={<TicketManagement />}>
-              <Route path=":params" element />
-            </Route>
+            <Route path="/ticket-management" element={<TicketManagement />} />
             <Route path="/ticket-check" element={<TicketChecking />} />
             <Route
               path="/ticket-check/event-package"

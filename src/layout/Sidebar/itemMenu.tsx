@@ -40,7 +40,7 @@ const items: MenuItem[] = [
     <HomeOutlined className="opacity-5" style={menuIcon} />
   ),
   getItem(
-    <Link to="/ticket-management">
+    <Link to={`/ticket-management`}>
       <Typography.Text className="text-normal gray-brown medium-18 opacity-6">
         Quản lý vé
       </Typography.Text>

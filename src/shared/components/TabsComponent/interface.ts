@@ -4,6 +4,7 @@ export interface ITabs {
   classNames?: string;
   style?: React.CSSProperties;
   onChange?: (value: any) => void;
-  defaultKey: string;
+  defaultKey?: string;
+  activeKey?: string;
   items: TabsProps["items"];
 }

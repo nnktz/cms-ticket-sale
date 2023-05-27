@@ -7,6 +7,7 @@ const TabsComponent: React.FC<ITabs> = (props) => {
   return (
     <Tabs
       defaultActiveKey={props.defaultKey}
+      activeKey={props.activeKey}
       items={props.items}
       onChange={props.onChange}
     />

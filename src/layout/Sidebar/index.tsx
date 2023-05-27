@@ -4,21 +4,21 @@ import "../styles.css";
 import LogoImage from "../../shared/assets/images/insight-logo.png";
 import ImageComponent from "../../shared/components/ImageComponent";
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const SiderComponent: React.FC = () => {
+  const location = useLocation();
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
 
   const handleMenuSelect = ({ key }: any) => {
-    localStorage.setItem("selectedKey", key);
     setSelectedKey(key);
   };
 
   useEffect(() => {
-    const storedKey = localStorage.getItem("selectedKey");
-    if (storedKey) {
-      setSelectedKey(storedKey);
-    }
-  }, []);
+    const path = location.pathname;
+    const key = path.slice(1);
+    setSelectedKey(key);
+  }, [location]);
 
   return (
     <div className="sidebar-container">
