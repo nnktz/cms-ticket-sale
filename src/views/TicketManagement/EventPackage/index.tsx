@@ -28,6 +28,13 @@ import DatePickerCustom from "../../../shared/components/DatePicker/DatePickerCu
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { CheckboxValueType } from "antd/es/checkbox/Group";
 import dayjs, { Dayjs } from "dayjs";
+import isSameOrBefore from "dayjs/esm/plugin/isSameOrBefore";
+import isSameOrAfter from "dayjs/esm/plugin/isSameOrAfter";
+import "dayjs/plugin/isSameOrBefore";
+import "dayjs/plugin/isSameOrAfter";
+
+dayjs.extend(isSameOrBefore);
+dayjs.extend(isSameOrAfter);
 
 export interface IData {
   bookingCode: string;
@@ -203,10 +210,8 @@ const EventPackage = () => {
 
     if (dateFrom && dateTo) {
       const filterFunc = (d: IData) =>
-        dayjs(d.usedDate).isSame(dateFrom) ||
-        (dayjs(d.usedDate).isAfter(dateFrom) &&
-          dayjs(d.usedDate).isSame(dateTo)) ||
-        dayjs(d.usedDate).isBefore(dateTo);
+        dayjs(d.usedDate).isSameOrAfter(dateFrom) &&
+        dayjs(d.usedDate).isSameOrBefore(dateTo);
       data = data.filter(filterFunc);
     }
 

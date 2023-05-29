@@ -25,6 +25,13 @@ import {
   fetchTickets,
   updateChecked,
 } from "../../modules/ticketChecking/actions";
+import isSameOrBefore from "dayjs/esm/plugin/isSameOrBefore";
+import isSameOrAfter from "dayjs/esm/plugin/isSameOrAfter";
+import "dayjs/plugin/isSameOrBefore";
+import "dayjs/plugin/isSameOrAfter";
+
+dayjs.extend(isSameOrBefore);
+dayjs.extend(isSameOrAfter);
 
 export interface IData {
   ticketNumber: string;
@@ -185,10 +192,8 @@ const TicketChecking: React.FC = () => {
     if (dateTo) {
       filteredData = filteredData.filter(
         (data) =>
-          dayjs(data.usedDate).isSame(dateFrom) ||
-          (dayjs(data.usedDate).isAfter(dateFrom) &&
-            dayjs(data.usedDate).isSame(dateTo)) ||
-          dayjs(data.usedDate).isBefore(dateTo)
+          dayjs(data.usedDate).isSameOrAfter(dateFrom) &&
+          dayjs(data.usedDate).isSameOrBefore(dateTo)
       );
     }
     setFilteredDataSource(filteredData);
